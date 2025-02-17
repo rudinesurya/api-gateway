@@ -13,10 +13,10 @@ export class ConfigService {
             },
             transport: Transport.TCP,
         };
-        this.envConfig.userService = {
+        this.envConfig.usersService = {
             options: {
-                port: process.env.USER_SERVICE_PORT,
-                host: process.env.USER_SERVICE_HOST,
+                port: process.env.USERS_SERVICE_PORT,
+                host: process.env.USERS_SERVICE_HOST,
             },
             transport: Transport.TCP,
         };
