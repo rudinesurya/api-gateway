@@ -62,7 +62,7 @@ export class UsersController {
         };
     }
 
-    @Post()
+    @Post('/register')
     @ApiCreatedResponse({
         type: CreateUserResponseDto,
     })
