@@ -7,7 +7,7 @@ import { firstValueFrom } from 'rxjs';
 export class JwtAuthGuard implements CanActivate {
   constructor(
     @Inject('TOKEN_SERVICE') private readonly tokenServiceClient: ClientProxy,
-    @Inject('USER_SERVICE') private readonly userServiceClient: ClientProxy,
+    @Inject('USERS_SERVICE') private readonly usersServiceClient: ClientProxy,
   ) { }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -36,7 +36,7 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const userInfo = await firstValueFrom(
-      this.userServiceClient.send('user_get_by_id', userTokenInfo.data.userId),
+      this.usersServiceClient.send('user_get_by_id', userTokenInfo.data.userId),
     );
 
     request.user = userInfo.user;

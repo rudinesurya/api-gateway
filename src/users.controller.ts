@@ -35,7 +35,7 @@ import { JwtAuthGuard } from './services/guards/jwt.guard';
 export class UsersController {
     constructor(
         @Inject('TOKEN_SERVICE') private readonly tokenServiceClient: ClientProxy,
-        @Inject('USER_SERVICE') private readonly userServiceClient: ClientProxy,
+        @Inject('USERS_SERVICE') private readonly usersServiceClient: ClientProxy,
     ) { }
 
     @Get()
@@ -50,7 +50,7 @@ export class UsersController {
         const userInfo = request.user;
 
         const userResponse: IServiceUserGetByIdResponse = await firstValueFrom(
-            this.userServiceClient.send('user_get_by_id', userInfo.id),
+            this.usersServiceClient.send('user_get_by_id', userInfo.id),
         );
 
         return {
@@ -70,7 +70,7 @@ export class UsersController {
         @Body() userRequest: CreateUserDto,
     ): Promise<CreateUserResponseDto> {
         const createUserResponse: IServiceUserCreateResponse = await firstValueFrom(
-            this.userServiceClient.send('user_create', userRequest),
+            this.usersServiceClient.send('user_create', userRequest),
         );
         if (createUserResponse.status !== HttpStatus.CREATED) {
             throw new HttpException(
@@ -107,7 +107,7 @@ export class UsersController {
         @Body() loginRequest: LoginUserDto,
     ): Promise<LoginUserResponseDto> {
         const getUserResponse: IServiceUserSearchResponse = await firstValueFrom(
-            this.userServiceClient.send('user_search_by_credentials', loginRequest),
+            this.usersServiceClient.send('user_search_by_credentials', loginRequest),
         );
 
         if (getUserResponse.status !== HttpStatus.OK) {
