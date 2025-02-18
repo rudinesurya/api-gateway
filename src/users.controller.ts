@@ -20,15 +20,17 @@ import { IServiceUserCreateResponse } from './interfaces/user/service-user-creat
 import { IServiceUserSearchResponse } from './interfaces/user/service-user-search-response.interface';
 import { IServiceTokenCreateResponse } from './interfaces/token/service-token-create-response.interface';
 import { IServiceTokenDestroyResponse } from './interfaces/token/service-token-destroy-response.interface';
-import { IServiceUserGetByIdResponse } from './interfaces/user/service-user-get-by-id-response.interface';
 
-import { GetUserByTokenResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
+import { GetUserByTokenResponseDto as GetUserResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
 import { CreateUserDto } from './interfaces/user/dto/create-user.dto';
 import { CreateUserResponseDto } from './interfaces/user/dto/create-user-response.dto';
 import { LoginUserDto } from './interfaces/user/dto/login-user.dto';
 import { LoginUserResponseDto } from './interfaces/user/dto/login-user-response.dto';
 import { LogoutUserResponseDto } from './interfaces/user/dto/logout-user-response.dto';
 import { JwtAuthGuard } from './services/guards/jwt.guard';
+import { UpdateUserResponseDto } from './interfaces/user/dto/update-user-response.dto';
+import { IServiceUserUpdateResponse } from './interfaces/user/service-user-update-response.interface';
+import { UpdateUserDto } from './interfaces/user/dto/update-user.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -42,14 +44,14 @@ export class UsersController {
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
-        type: GetUserByTokenResponseDto,
+        type: GetUserResponseDto,
     })
     public async getUserByToken(
         @Req() request: IAuthorizedRequest,
-    ): Promise<GetUserByTokenResponseDto> {
+    ): Promise<GetUserResponseDto> {
         const userInfo = request.user;
 
-        const userResponse: IServiceUserGetByIdResponse = await firstValueFrom(
+        const userResponse: IServiceUserSearchResponse = await firstValueFrom(
             this.usersServiceClient.send('user_get_by_id', userInfo.id),
         );
 
@@ -62,7 +64,7 @@ export class UsersController {
         };
     }
 
-    @Post()
+    @Post('/register')
     @ApiCreatedResponse({
         type: CreateUserResponseDto,
     })
@@ -168,6 +170,39 @@ export class UsersController {
             message: destroyTokenResponse.message,
             errors: null,
             data: null,
+        };
+    }
+
+    @Put()
+    @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({
+        type: UpdateUserResponseDto,
+    })
+    public async updateUser(
+        @Req() request: IAuthorizedRequest,
+        @Body() updateData: UpdateUserDto,
+    ): Promise<UpdateUserResponseDto> {
+        const updateUserResponse: IServiceUserUpdateResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_update', { id: request.user.id, updateData }),
+        );
+        if (updateUserResponse.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    message: updateUserResponse.message,
+                    data: null,
+                    errors: updateUserResponse.errors,
+                },
+                updateUserResponse.status,
+            );
+        }
+
+        return {
+            message: updateUserResponse.message,
+            data: {
+                user: updateUserResponse.user,
+            },
+            errors: null,
         };
     }
 }
