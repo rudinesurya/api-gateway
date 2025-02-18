@@ -4,10 +4,11 @@ import { APP_GUARD } from '@nestjs/core';
 import { ClientProxyFactory } from '@nestjs/microservices';
 import { UsersController } from './users.controller';
 import { ConfigService } from './services/config/config.service';
+import { UserRatingsController } from './user-ratings.controller';
 
 @Module({
     imports: [ConfigModule.forRoot()],
-    controllers: [UsersController],
+    controllers: [UsersController, UserRatingsController],
     providers: [
         ConfigService,
         {
@@ -22,6 +23,14 @@ import { ConfigService } from './services/config/config.service';
             provide: 'USERS_SERVICE',
             useFactory: (configService: ConfigService) => {
                 const usersServiceOptions = configService.get('usersService');
+                return ClientProxyFactory.create(usersServiceOptions);
+            },
+            inject: [ConfigService],
+        },
+        {
+            provide: 'USER_RATINGS_SERVICE',
+            useFactory: (configService: ConfigService) => {
+                const usersServiceOptions = configService.get('userRatingsService');
                 return ClientProxyFactory.create(usersServiceOptions);
             },
             inject: [ConfigService],

@@ -20,6 +20,13 @@ export class ConfigService {
             },
             transport: Transport.TCP,
         };
+        this.envConfig.userRatingsService = {
+            options: {
+                port: process.env.USER_RATINGS_SERVICE_PORT,
+                host: process.env.USER_RATINGS_SERVICE_HOST,
+            },
+            transport: Transport.TCP,
+        };
     }
 
     get(key: string): any {
