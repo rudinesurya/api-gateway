@@ -30,7 +30,8 @@ import { LogoutUserResponseDto } from './interfaces/user/dto/logout-user-respons
 import { JwtAuthGuard } from './services/guards/jwt.guard';
 import { UpdateUserResponseDto } from './interfaces/user/dto/update-user-response.dto';
 import { IServiceUserUpdateResponse } from './interfaces/user/service-user-update-response.interface';
-import { UpdateUserDto } from './interfaces/user/dto/update-user.dto';
+import { UpdateUserProfileDto } from './interfaces/user/dto/update-user-profile.dto';
+import { UpdateUserSettingsDto } from './interfaces/user/dto/update-user-settings.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -53,6 +54,26 @@ export class UsersController {
 
         const userResponse: IServiceUserSearchResponse = await firstValueFrom(
             this.usersServiceClient.send('user_get_by_id', userInfo.id),
+        );
+
+        return {
+            message: userResponse.message,
+            data: {
+                user: userResponse.user,
+            },
+            errors: null,
+        };
+    }
+
+    @Get('/handle/:handle')
+    @ApiOkResponse({
+        type: GetUserResponseDto,
+    })
+    public async getUserByHandle(
+        @Param('handle') handle: string,
+    ): Promise<GetUserResponseDto> {
+        const userResponse: IServiceUserSearchResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_get_by_handle', handle),
         );
 
         return {
@@ -173,15 +194,48 @@ export class UsersController {
         };
     }
 
-    @Put()
+    @Put('/settings')
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
         type: UpdateUserResponseDto,
     })
-    public async updateUser(
+    public async updateUserSettings(
         @Req() request: IAuthorizedRequest,
-        @Body() updateData: UpdateUserDto,
+        @Body() updateData: UpdateUserSettingsDto,
+    ): Promise<UpdateUserResponseDto> {
+        const updateUserResponse: IServiceUserUpdateResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_update', { id: request.user.id, updateData }),
+        );
+        if (updateUserResponse.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    message: updateUserResponse.message,
+                    data: null,
+                    errors: updateUserResponse.errors,
+                },
+                updateUserResponse.status,
+            );
+        }
+
+        return {
+            message: updateUserResponse.message,
+            data: {
+                user: updateUserResponse.user,
+            },
+            errors: null,
+        };
+    }
+
+    @Put('/profile')
+    @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({
+        type: UpdateUserResponseDto,
+    })
+    public async updateUserProfile(
+        @Req() request: IAuthorizedRequest,
+        @Body() updateData: UpdateUserProfileDto,
     ): Promise<UpdateUserResponseDto> {
         const updateUserResponse: IServiceUserUpdateResponse = await firstValueFrom(
             this.usersServiceClient.send('user_update', { id: request.user.id, updateData }),

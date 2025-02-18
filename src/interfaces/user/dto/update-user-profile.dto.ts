@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateUserDto {
+export class UpdateUserProfileDto {
     @ApiProperty({
         required: false, example: 'John',
     })
@@ -17,8 +17,4 @@ export class UpdateUserDto {
         required: false, example: 'https://example.atlassian.net/secure/projectavatar?pid=10000&avatarId=10409',
     })
     avatarUri: string;
-    @ApiProperty({
-        required: false, example: 'dark-theme',
-    })
-    theme: string;
 }
