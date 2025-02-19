@@ -30,7 +30,7 @@ export class UserRatingsController {
         @Param('ratedUserId') ratedUserId: string,
     ): Promise<GetUserRatingsByRatedUserIdResponseDto> {
         const userResponse: IServiceUserRatingsSearchResponse = await firstValueFrom(
-            this.userRatingsServiceClient.send('user_ratings_get_by_rated_user_id', ratedUserId),
+            this.userRatingsServiceClient.send('user_ratings_get_by_rated_user_id', { ratedUserId }),
         );
 
         return {
