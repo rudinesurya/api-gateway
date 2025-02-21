@@ -14,13 +14,11 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags, ApiOkResponse, ApiCreatedResponse, ApiBearerAuth } from '@nestjs/swagger';
-
 import { IAuthorizedRequest } from './interfaces/common/authorized-request.interface';
 import { IServiceUserCreateResponse } from './interfaces/user/service-user-create-response.interface';
 import { IServiceUserSearchResponse } from './interfaces/user/service-user-search-response.interface';
 import { IServiceTokenCreateResponse } from './interfaces/token/service-token-create-response.interface';
 import { IServiceTokenDestroyResponse } from './interfaces/token/service-token-destroy-response.interface';
-
 import { GetUserByTokenResponseDto as GetUserResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
 import { CreateUserDto } from './interfaces/user/dto/create-user.dto';
 import { CreateUserResponseDto } from './interfaces/user/dto/create-user-response.dto';
@@ -50,16 +48,14 @@ export class UsersController {
     public async getUserByToken(
         @Req() request: IAuthorizedRequest,
     ): Promise<GetUserResponseDto> {
-        const userInfo = request.user;
-
-        const userResponse: IServiceUserSearchResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_get_by_id', userInfo.id),
+        const response: IServiceUserSearchResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_get_by_id', { id: request.user.id }),
         );
 
         return {
-            message: userResponse.message,
+            message: response.message,
             data: {
-                user: userResponse.user,
+                user: response.user,
             },
             errors: null,
         };
@@ -72,14 +68,14 @@ export class UsersController {
     public async getUserByHandle(
         @Param('handle') handle: string,
     ): Promise<GetUserResponseDto> {
-        const userResponse: IServiceUserSearchResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_get_by_handle', handle),
+        const response: IServiceUserSearchResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_get_by_handle', { handle }),
         );
 
         return {
-            message: userResponse.message,
+            message: response.message,
             data: {
-                user: userResponse.user,
+                user: response.user,
             },
             errors: null,
         };
@@ -90,10 +86,10 @@ export class UsersController {
         type: CreateUserResponseDto,
     })
     public async createUser(
-        @Body() userRequest: CreateUserDto,
+        @Body() body: CreateUserDto,
     ): Promise<CreateUserResponseDto> {
         const createUserResponse: IServiceUserCreateResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_create', userRequest),
+            this.usersServiceClient.send('user_create', { createData: body }),
         );
         if (createUserResponse.status !== HttpStatus.CREATED) {
             throw new HttpException(
@@ -127,10 +123,10 @@ export class UsersController {
         type: LoginUserResponseDto,
     })
     public async loginUser(
-        @Body() loginRequest: LoginUserDto,
+        @Body() body: LoginUserDto,
     ): Promise<LoginUserResponseDto> {
         const getUserResponse: IServiceUserSearchResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_search_by_credentials', loginRequest),
+            this.usersServiceClient.send('user_search_by_credentials', { email: body.email, password: body.password }),
         );
 
         if (getUserResponse.status !== HttpStatus.OK) {
@@ -202,26 +198,26 @@ export class UsersController {
     })
     public async updateUserSettings(
         @Req() request: IAuthorizedRequest,
-        @Body() updateData: UpdateUserSettingsDto,
+        @Body() body: UpdateUserSettingsDto,
     ): Promise<UpdateUserResponseDto> {
-        const updateUserResponse: IServiceUserUpdateResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_update', { id: request.user.id, updateData }),
+        const response: IServiceUserUpdateResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_update', { id: request.user.id, updateData: body }),
         );
-        if (updateUserResponse.status !== HttpStatus.OK) {
+        if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: updateUserResponse.message,
+                    message: response.message,
                     data: null,
-                    errors: updateUserResponse.errors,
+                    errors: response.errors,
                 },
-                updateUserResponse.status,
+                response.status,
             );
         }
 
         return {
-            message: updateUserResponse.message,
+            message: response.message,
             data: {
-                user: updateUserResponse.user,
+                user: response.user,
             },
             errors: null,
         };
@@ -235,26 +231,26 @@ export class UsersController {
     })
     public async updateUserProfile(
         @Req() request: IAuthorizedRequest,
-        @Body() updateData: UpdateUserProfileDto,
+        @Body() body: UpdateUserProfileDto,
     ): Promise<UpdateUserResponseDto> {
-        const updateUserResponse: IServiceUserUpdateResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_update', { id: request.user.id, updateData }),
+        const response: IServiceUserUpdateResponse = await firstValueFrom(
+            this.usersServiceClient.send('user_update', { id: request.user.id, updateData: body }),
         );
-        if (updateUserResponse.status !== HttpStatus.OK) {
+        if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: updateUserResponse.message,
+                    message: response.message,
                     data: null,
-                    errors: updateUserResponse.errors,
+                    errors: response.errors,
                 },
-                updateUserResponse.status,
+                response.status,
             );
         }
 
         return {
-            message: updateUserResponse.message,
+            message: response.message,
             data: {
-                user: updateUserResponse.user,
+                user: response.user,
             },
             errors: null,
         };

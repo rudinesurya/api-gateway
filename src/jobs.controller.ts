@@ -26,15 +26,15 @@ export class JobsController {
         @Inject('JOBS_SERVICE') private readonly jobsServiceClient: ClientProxy,
     ) { }
 
-    @Get('/:jobId')
+    @Get('/:id')
     @ApiOkResponse({
         type: GetJobResponseDto,
     })
     public async getJobById(
-        @Param('jobId') jobId: string,
+        @Param('id') id: string,
     ): Promise<GetJobResponseDto> {
         const response: IServiceJobSearchResponse = await firstValueFrom(
-            this.jobsServiceClient.send('job_get_by_id', { jobId }),
+            this.jobsServiceClient.send('job_get_by_id', { id }),
         );
 
         if (response.status !== HttpStatus.OK) {
@@ -83,10 +83,10 @@ export class JobsController {
     })
     public async createJob(
         @Req() request: IAuthorizedRequest,
-        @Body() jobParams: CreateJobDto,
+        @Body() body: CreateJobDto,
     ): Promise<CreateJobResponseDto> {
         const response: IServiceJobCreateResponse = await firstValueFrom(
-            this.jobsServiceClient.send('job_create', { postedBy: request.user.id, ...jobParams }),
+            this.jobsServiceClient.send('job_create', { createData: { postedBy: request.user.id, ...body } }),
         );
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
@@ -108,19 +108,19 @@ export class JobsController {
         };
     }
 
-    @Put('/:jobId')
+    @Put('/:id')
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
         type: UpdateUserRatingResponseDto,
     })
     public async updateJob(
-        @Param('jobId') jobId: string,
+        @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
-        @Body() updateData: UpdateJobDto,
+        @Body() body: UpdateJobDto,
     ): Promise<UpdateJobResponseDto> {
         const response: IServiceJobUpdateResponse = await firstValueFrom(
-            this.jobsServiceClient.send('job_update', { jobId, postedById: request.user.id, updateData }),
+            this.jobsServiceClient.send('job_update', { id, userId: request.user.id, updateData: body }),
         );
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
@@ -142,20 +142,20 @@ export class JobsController {
         };
     }
 
-    @Delete('/:jobId')
+    @Delete('/:id')
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
         type: DeleteUserRatingResponseDto,
     })
-    public async deleteUserRating(
-        @Param('jobId') jobId: string,
+    public async deleteJob(
+        @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
     ): Promise<DeleteJobResponseDto> {
         const response: IServiceJobDeleteResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_delete_by_id', {
-                jobId,
-                postedById: request.user.id,
+                id,
+                userId: request.user.id,
             }),
         );
 

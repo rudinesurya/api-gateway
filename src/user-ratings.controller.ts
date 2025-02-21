@@ -22,21 +22,21 @@ export class UserRatingsController {
         @Inject('USER_RATINGS_SERVICE') private readonly userRatingsServiceClient: ClientProxy,
     ) { }
 
-    @Get('/user/:ratedUserId')
+    @Get('/user/:id')
     @ApiOkResponse({
         type: GetUserRatingsByRatedUserIdResponseDto,
     })
     public async getUserRatingsByRatedUserId(
-        @Param('ratedUserId') ratedUserId: string,
+        @Param('id') id: string,
     ): Promise<GetUserRatingsByRatedUserIdResponseDto> {
-        const userResponse: IServiceUserRatingsSearchResponse = await firstValueFrom(
-            this.userRatingsServiceClient.send('user_ratings_get_by_rated_user_id', { ratedUserId }),
+        const response: IServiceUserRatingsSearchResponse = await firstValueFrom(
+            this.userRatingsServiceClient.send('user_ratings_get_by_rated_user_id', { ratedUserId: id }),
         );
 
         return {
-            message: userResponse.message,
+            message: response.message,
             data: {
-                user_ratings: userResponse.user_ratings,
+                user_ratings: response.user_ratings,
             },
             errors: null,
         };
@@ -50,95 +50,95 @@ export class UserRatingsController {
     })
     public async createUserRating(
         @Req() request: IAuthorizedRequest,
-        @Body() userRatingParams: CreateUserRatingDto,
+        @Body() body: CreateUserRatingDto,
     ): Promise<CreateUserRatingResponseDto> {
-        const createUserRatingResponse: IServiceUserRatingCreateResponse = await firstValueFrom(
-            this.userRatingsServiceClient.send('user_rating_create', { rater: request.user.id, ...userRatingParams }),
+        const response: IServiceUserRatingCreateResponse = await firstValueFrom(
+            this.userRatingsServiceClient.send('user_rating_create', { createData: { rater: request.user.id, ...body } }),
         );
-        if (createUserRatingResponse.status !== HttpStatus.CREATED) {
+        if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
-                    message: createUserRatingResponse.message,
+                    message: response.message,
                     data: null,
-                    errors: createUserRatingResponse.errors,
+                    errors: response.errors,
                 },
-                createUserRatingResponse.status,
+                response.status,
             );
         }
 
         return {
-            message: createUserRatingResponse.message,
+            message: response.message,
             data: {
-                user_rating: createUserRatingResponse.user_rating,
+                user_rating: response.user_rating,
             },
             errors: null,
         };
     }
 
-    @Put('/:ratingId')
+    @Put('/:id')
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
         type: UpdateUserRatingResponseDto,
     })
     public async updateUserRating(
-        @Param('ratingId') ratingId: string,
+        @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
-        @Body() updateData: UpdateUserRatingDto,
+        @Body() body: UpdateUserRatingDto,
     ): Promise<UpdateUserRatingResponseDto> {
-        const updateUserRatingResponse: IServiceUserRatingUpdateResponse = await firstValueFrom(
-            this.userRatingsServiceClient.send('user_rating_update', { ratingId, raterId: request.user.id, updateData }),
+        const response: IServiceUserRatingUpdateResponse = await firstValueFrom(
+            this.userRatingsServiceClient.send('user_rating_update', { ratingId: id, raterId: request.user.id, updateData: body }),
         );
-        if (updateUserRatingResponse.status !== HttpStatus.OK) {
+        if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: updateUserRatingResponse.message,
+                    message: response.message,
                     data: null,
-                    errors: updateUserRatingResponse.errors,
+                    errors: response.errors,
                 },
-                updateUserRatingResponse.status,
+                response.status,
             );
         }
 
         return {
-            message: updateUserRatingResponse.message,
+            message: response.message,
             data: {
-                user_rating: updateUserRatingResponse.user_rating,
+                user_rating: response.user_rating,
             },
             errors: null,
         };
     }
 
-    @Delete('/:ratingId')
+    @Delete('/:id')
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
         type: DeleteUserRatingResponseDto,
     })
     public async deleteUserRating(
-        @Param('ratingId') ratingId: string,
+        @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
     ): Promise<DeleteUserRatingResponseDto> {
-        const deleteUserRatingResponse: IServiceUserRatingDeleteResponse = await firstValueFrom(
+        const response: IServiceUserRatingDeleteResponse = await firstValueFrom(
             this.userRatingsServiceClient.send('user_rating_delete_by_id', {
-                ratingId,
+                ratingId: id,
                 raterId: request.user.id,
             }),
         );
 
-        if (deleteUserRatingResponse.status !== HttpStatus.OK) {
+        if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: deleteUserRatingResponse.message,
-                    errors: deleteUserRatingResponse.errors,
+                    message: response.message,
+                    errors: response.errors,
                     data: null,
                 },
-                deleteUserRatingResponse.status,
+                response.status,
             );
         }
 
         return {
-            message: deleteUserRatingResponse.message,
+            message: response.message,
             data: null,
             errors: null,
         };
