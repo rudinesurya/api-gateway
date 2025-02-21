@@ -5,7 +5,7 @@ export class CreateUserRatingDto {
     @ApiProperty({
         example: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
     })
-    ratedUser: Types.ObjectId;
+    rated_user: Types.ObjectId;
     @ApiProperty({
         example: 5,
     })

@@ -86,7 +86,7 @@ export class JobsController {
         @Body() body: CreateJobDto,
     ): Promise<CreateJobResponseDto> {
         const response: IServiceJobCreateResponse = await firstValueFrom(
-            this.jobsServiceClient.send('job_create', { createData: { postedBy: request.user.id, ...body } }),
+            this.jobsServiceClient.send('job_create', { createData: { posted_by: request.user.id, ...body } }),
         );
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(

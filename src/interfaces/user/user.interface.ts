@@ -5,7 +5,7 @@ export interface IUser {
     name?: string;
     handle?: string;
     bio?: string;
-    avatarUri?: string;
+    avatar_uri?: string;
 
     // User Settings
     theme?: string;

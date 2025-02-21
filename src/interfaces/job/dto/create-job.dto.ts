@@ -12,8 +12,8 @@ export class CreateJobDto {
     description: string;
     @ApiProperty({
         example: {
-            formattedAddress: "",
-            placeId: "",
+            formatted_address: "",
+            place_id: "",
             lat: 99,
             lng: 99,
         },

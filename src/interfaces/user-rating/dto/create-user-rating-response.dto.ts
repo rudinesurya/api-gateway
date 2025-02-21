@@ -9,7 +9,7 @@ export class CreateUserRatingResponseDto {
         example: {
             user_rating: {
                 rater: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
-                ratedUser: new Types.ObjectId('5d987c3bfb881ec86b476bcd'),
+                rated_user: new Types.ObjectId('5d987c3bfb881ec86b476bcd'),
                 rating: 5,
                 comment: 'asdasd',
             },

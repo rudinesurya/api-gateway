@@ -1,5 +1,5 @@
 export interface ITokenInfo {
     data: {
-        userId: string;
+        user_id: string;
     };
 }

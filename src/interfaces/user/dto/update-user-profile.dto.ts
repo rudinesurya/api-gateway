@@ -16,5 +16,5 @@ export class UpdateUserProfileDto {
     @ApiProperty({
         required: false, example: 'https://example.atlassian.net/secure/projectavatar?pid=10000&avatarId=10409',
     })
-    avatarUri: string;
+    avatar_uri: string;
 }

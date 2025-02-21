@@ -11,13 +11,13 @@ export class GetJobResponseDto {
                 title: "Plumbing",
                 description: "asdasd",
                 location: {
-                    formattedAddress: "",
-                    placeId: "",
+                    formatted_address: "",
+                    place_id: "",
                     lat: 99,
                     lng: 99,
                 },
                 salary: 999,
-                postedBy: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+                posted_by: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
             }
         },
         nullable: true,
