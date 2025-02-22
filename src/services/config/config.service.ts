@@ -34,6 +34,20 @@ export class ConfigService {
             },
             transport: Transport.TCP,
         };
+        this.envConfig.applicationsService = {
+            options: {
+                port: process.env.APPLICATIONS_SERVICE_PORT,
+                host: process.env.APPLICATIONS_SERVICE_HOST,
+            },
+            transport: Transport.TCP,
+        };
+        this.envConfig.messagesService = {
+            options: {
+                port: process.env.MESSAGES_SERVICE_PORT,
+                host: process.env.MESSAGES_SERVICE_HOST,
+            },
+            transport: Transport.TCP,
+        };
     }
 
     get(key: string): any {
