@@ -1,5 +1,6 @@
-export interface IUser {
-    _id: string;
+import { Document } from 'mongoose';
+
+export interface IUser extends Document {
     email: string;
     // User Profile
     name?: string;
