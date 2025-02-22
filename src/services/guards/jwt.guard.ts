@@ -36,7 +36,7 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const userInfo = await firstValueFrom(
-      this.usersServiceClient.send('user_get_by_id', {id: userTokenInfo.data.user_id}),
+      this.usersServiceClient.send('user_get_by_id', { id: userTokenInfo.data.user_id }),
     );
 
     request.user = userInfo.user;

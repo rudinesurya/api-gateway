@@ -86,7 +86,7 @@ export class JobsController {
         @Body() body: CreateJobDto,
     ): Promise<CreateJobResponseDto> {
         const response: IServiceJobCreateResponse = await firstValueFrom(
-            this.jobsServiceClient.send('job_create', { createData: { posted_by: request.user.id, ...body } }),
+            this.jobsServiceClient.send('job_create', { createData: { posted_by: request.user._id, ...body } }),
         );
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
@@ -120,7 +120,7 @@ export class JobsController {
         @Body() body: UpdateJobDto,
     ): Promise<UpdateJobResponseDto> {
         const response: IServiceJobUpdateResponse = await firstValueFrom(
-            this.jobsServiceClient.send('job_update', { id, userId: request.user.id, updateData: body }),
+            this.jobsServiceClient.send('job_update', { id, userId: request.user._id, updateData: body }),
         );
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
@@ -155,7 +155,7 @@ export class JobsController {
         const response: IServiceJobDeleteResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_delete_by_id', {
                 id,
-                userId: request.user.id,
+                userId: request.user._id,
             }),
         );
 

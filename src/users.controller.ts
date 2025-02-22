@@ -49,7 +49,7 @@ export class UsersController {
         @Req() request: IAuthorizedRequest,
     ): Promise<GetUserResponseDto> {
         const response: IServiceUserSearchResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_get_by_id', { id: request.user.id }),
+            this.usersServiceClient.send('user_get_by_id', { id: request.user._id }),
         );
 
         return {
@@ -104,7 +104,7 @@ export class UsersController {
 
         const createTokenResponse: IServiceTokenCreateResponse = await firstValueFrom(
             this.tokenServiceClient.send('token_create', {
-                userId: createUserResponse.user.id,
+                userId: createUserResponse.user._id,
             }),
         );
 
@@ -142,7 +142,7 @@ export class UsersController {
 
         const createTokenResponse: IServiceTokenCreateResponse = await firstValueFrom(
             this.tokenServiceClient.send('token_create', {
-                userId: getUserResponse.user.id,
+                userId: getUserResponse.user._id,
             }),
         );
 
@@ -168,7 +168,7 @@ export class UsersController {
 
         const destroyTokenResponse: IServiceTokenDestroyResponse = await firstValueFrom(
             this.tokenServiceClient.send('token_destroy', {
-                userId: userInfo.id,
+                userId: userInfo._id,
             }),
         );
 
@@ -201,7 +201,7 @@ export class UsersController {
         @Body() body: UpdateUserSettingsDto,
     ): Promise<UpdateUserResponseDto> {
         const response: IServiceUserUpdateResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_update', { id: request.user.id, updateData: body }),
+            this.usersServiceClient.send('user_update', { id: request.user._id, updateData: body }),
         );
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
@@ -234,7 +234,7 @@ export class UsersController {
         @Body() body: UpdateUserProfileDto,
     ): Promise<UpdateUserResponseDto> {
         const response: IServiceUserUpdateResponse = await firstValueFrom(
-            this.usersServiceClient.send('user_update', { id: request.user.id, updateData: body }),
+            this.usersServiceClient.send('user_update', { id: request.user._id, updateData: body }),
         );
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
