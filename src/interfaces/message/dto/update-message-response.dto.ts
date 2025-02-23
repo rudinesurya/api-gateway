@@ -8,8 +8,8 @@ export class UpdateMessageResponseDto {
     @ApiProperty({
         example: {
             application: {
-                sender: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
-                recipient: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+                sender: new Types.ObjectId(),
+                recipient: new Types.ObjectId(),
                 content: "asd",
             },
         },

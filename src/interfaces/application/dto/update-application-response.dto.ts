@@ -8,8 +8,8 @@ export class UpdateApplicationResponseDto {
     @ApiProperty({
         example: {
             application: {
-                job: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
-                applicant: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+                job: new Types.ObjectId(),
+                applicant: new Types.ObjectId(),
                 cover_letter: "Plumbing",
             },
         },

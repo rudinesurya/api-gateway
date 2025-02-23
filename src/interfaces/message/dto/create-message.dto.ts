@@ -3,11 +3,11 @@ import { Types } from 'mongoose';
 
 export class CreateMessageDto {
     @ApiProperty({
-        example: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+        example: new Types.ObjectId(),
     })
     sender: Types.ObjectId;
     @ApiProperty({
-        example: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+        example: new Types.ObjectId(),
     })
     recipient: Types.ObjectId;
     @ApiProperty({

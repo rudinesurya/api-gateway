@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IUser } from '../user.interface';
+import { Types } from 'mongoose';
 
 export class CreateUserResponseDto {
     @ApiProperty({ example: 'user_create_success' })
@@ -8,7 +9,7 @@ export class CreateUserResponseDto {
         example: {
             user: {
                 email: 'john@test.com',
-                id: '5d987c3bfb881ec86b476bcc',
+                _id: new Types.ObjectId()
             },
         },
         nullable: true,

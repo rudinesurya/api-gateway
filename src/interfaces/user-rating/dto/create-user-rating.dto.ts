@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 
 export class CreateUserRatingDto {
     @ApiProperty({
-        example: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+        example: new Types.ObjectId(),
     })
     rated_user: Types.ObjectId;
     @ApiProperty({

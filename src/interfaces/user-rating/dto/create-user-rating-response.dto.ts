@@ -8,8 +8,8 @@ export class CreateUserRatingResponseDto {
     @ApiProperty({
         example: {
             user_rating: {
-                rater: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
-                rated_user: new Types.ObjectId('5d987c3bfb881ec86b476bcd'),
+                rater: new Types.ObjectId(),
+                rated_user: new Types.ObjectId(),
                 rating: 5,
                 comment: 'asdasd',
             },

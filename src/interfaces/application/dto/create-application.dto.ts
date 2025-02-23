@@ -3,11 +3,11 @@ import { Types } from 'mongoose';
 
 export class CreateApplicationDto {
     @ApiProperty({
-        example: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+        example: new Types.ObjectId(),
     })
     job: Types.ObjectId;
     @ApiProperty({
-        example: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+        example: new Types.ObjectId(),
     })
     applicant: Types.ObjectId;
     @ApiProperty({

@@ -17,7 +17,7 @@ export class GetJobResponseDto {
                     lng: 99,
                 },
                 salary: 999,
-                posted_by: new Types.ObjectId('5d987c3bfb881ec86b476bcc'),
+                posted_by: new Types.ObjectId(),
             }
         },
         nullable: true,
