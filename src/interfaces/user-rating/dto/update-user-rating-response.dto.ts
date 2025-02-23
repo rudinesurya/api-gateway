@@ -3,7 +3,7 @@ import { IUserRating } from '../user-rating.interface';
 
 export class UpdateUserRatingResponseDto {
     @ApiProperty({ example: 'user_rating_update_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             user_rating: {

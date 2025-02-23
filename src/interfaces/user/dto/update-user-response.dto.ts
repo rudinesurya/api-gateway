@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 
 export class UpdateUserResponseDto {
     @ApiProperty({ example: 'user_update_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             user: {

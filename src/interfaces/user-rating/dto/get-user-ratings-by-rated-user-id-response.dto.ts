@@ -3,7 +3,7 @@ import { IUserRating } from '../user-rating.interface';
 
 export class GetUserRatingsByRatedUserIdResponseDto {
     @ApiProperty({ example: 'user_ratings_get_by_rated_user_id_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             user_ratings: []

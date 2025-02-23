@@ -1,5 +1,5 @@
 export interface IServiceUserRatingDeleteResponse {
     status: number;
-    message: string;
+    system_message: string;
     errors: { [key: string]: any };
 }

@@ -4,7 +4,7 @@ import { IApplication } from '../application.interface';
 
 export class UpdateApplicationResponseDto {
     @ApiProperty({ example: 'application_create_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             application: {

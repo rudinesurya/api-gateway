@@ -4,7 +4,7 @@ import { IJob } from '../job.interface';
 
 export class CreateJobResponseDto {
     @ApiProperty({ example: 'job_create_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             job: {

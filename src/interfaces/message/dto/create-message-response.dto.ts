@@ -4,7 +4,7 @@ import { IMessage } from '../message.interface';
 
 export class CreateMessageResponseDto {
     @ApiProperty({ example: 'message_create_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             message: {

@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 
 export class GetJobResponseDto {
     @ApiProperty({ example: 'job_get_by_id_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             job: {

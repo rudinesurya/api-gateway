@@ -34,7 +34,7 @@ export class UserRatingsController {
         );
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user_ratings: response.user_ratings,
             },
@@ -58,7 +58,7 @@ export class UserRatingsController {
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -67,7 +67,7 @@ export class UserRatingsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user_rating: response.user_rating,
             },
@@ -92,7 +92,7 @@ export class UserRatingsController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -101,7 +101,7 @@ export class UserRatingsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user_rating: response.user_rating,
             },
@@ -129,7 +129,7 @@ export class UserRatingsController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     errors: response.errors,
                     data: null,
                 },
@@ -138,7 +138,7 @@ export class UserRatingsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: null,
             errors: null,
         };

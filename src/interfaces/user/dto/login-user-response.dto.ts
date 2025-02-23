@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginUserResponseDto {
     @ApiProperty({ example: 'token_create_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: { token: 'someEncodedToken' },
         nullable: true,

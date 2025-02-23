@@ -3,7 +3,7 @@ import { IMessage } from '../message.interface';
 
 export class GetMessagesResponseDto {
     @ApiProperty({ example: 'messages_get_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             messages: []

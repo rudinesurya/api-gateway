@@ -53,7 +53,7 @@ export class UsersController {
         );
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user: response.user,
             },
@@ -73,7 +73,7 @@ export class UsersController {
         );
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user: response.user,
             },
@@ -94,7 +94,7 @@ export class UsersController {
         if (createUserResponse.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
-                    message: createUserResponse.message,
+                    system_message: createUserResponse.system_message,
                     data: null,
                     errors: createUserResponse.errors,
                 },
@@ -109,7 +109,7 @@ export class UsersController {
         );
 
         return {
-            message: createUserResponse.message,
+            system_message: createUserResponse.system_message,
             data: {
                 user: createUserResponse.user,
                 token: createTokenResponse.token,
@@ -132,7 +132,7 @@ export class UsersController {
         if (getUserResponse.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: getUserResponse.message,
+                    system_message: getUserResponse.system_message,
                     data: null,
                     errors: null,
                 },
@@ -147,7 +147,7 @@ export class UsersController {
         );
 
         return {
-            message: createTokenResponse.message,
+            system_message: createTokenResponse.system_message,
             data: {
                 token: createTokenResponse.token,
             },
@@ -175,7 +175,7 @@ export class UsersController {
         if (destroyTokenResponse.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: destroyTokenResponse.message,
+                    system_message: destroyTokenResponse.system_message,
                     data: null,
                     errors: destroyTokenResponse.errors,
                 },
@@ -184,7 +184,7 @@ export class UsersController {
         }
 
         return {
-            message: destroyTokenResponse.message,
+            system_message: destroyTokenResponse.system_message,
             errors: null,
             data: null,
         };
@@ -206,7 +206,7 @@ export class UsersController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -215,7 +215,7 @@ export class UsersController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user: response.user,
             },
@@ -239,7 +239,7 @@ export class UsersController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -248,7 +248,7 @@ export class UsersController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 user: response.user,
             },

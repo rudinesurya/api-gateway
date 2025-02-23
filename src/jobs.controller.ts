@@ -40,7 +40,7 @@ export class JobsController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -49,7 +49,7 @@ export class JobsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 job: response.job,
             },
@@ -67,7 +67,7 @@ export class JobsController {
         );
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 jobs: response.jobs,
             },
@@ -91,7 +91,7 @@ export class JobsController {
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -100,7 +100,7 @@ export class JobsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 job: response.job,
             },
@@ -125,7 +125,7 @@ export class JobsController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     data: null,
                     errors: response.errors,
                 },
@@ -134,7 +134,7 @@ export class JobsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: {
                 job: response.job,
             },
@@ -162,7 +162,7 @@ export class JobsController {
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
-                    message: response.message,
+                    system_message: response.system_message,
                     errors: response.errors,
                     data: null,
                 },
@@ -171,7 +171,7 @@ export class JobsController {
         }
 
         return {
-            message: response.message,
+            system_message: response.system_message,
             data: null,
             errors: null,
         };

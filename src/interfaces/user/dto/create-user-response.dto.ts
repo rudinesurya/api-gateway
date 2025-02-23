@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 
 export class CreateUserResponseDto {
     @ApiProperty({ example: 'user_create_success' })
-    message: string;
+    system_message: string;
     @ApiProperty({
         example: {
             user: {

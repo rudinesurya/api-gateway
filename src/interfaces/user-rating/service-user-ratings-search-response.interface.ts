@@ -2,6 +2,6 @@ import { IUserRating } from './user-rating.interface';
 
 export interface IServiceUserRatingsSearchResponse {
     status: number;
-    message: string;
+    system_message: string;
     user_ratings: IUserRating[] | null;
 }
