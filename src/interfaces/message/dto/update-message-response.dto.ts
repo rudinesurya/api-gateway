@@ -7,7 +7,7 @@ export class UpdateMessageResponseDto {
     message: string;
     @ApiProperty({
         example: {
-            application: {
+            message: {
                 sender: new Types.ObjectId(),
                 recipient: new Types.ObjectId(),
                 content: "asd",
