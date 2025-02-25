@@ -14,6 +14,8 @@ import { IServiceApplicationCreateResponse } from "./interfaces/application/serv
 import { IServiceApplicationSearchResponse } from "./interfaces/application/service-application-search-response.interface";
 import { IServiceApplicationUpdateResponse } from "./interfaces/application/service-application-update-response.interface";
 import { IServiceJobDeleteResponse } from "./interfaces/job/service-job-delete-response.interface";
+import { GetApplicationsResponseDto } from "./interfaces/application/dto/get-applications-response.dto";
+import { IServiceApplicationsSearchResponse } from "./interfaces/application/service-applications-search-response.interface";
 
 @Controller('applications')
 @ApiTags('applications')
@@ -48,6 +50,40 @@ export class ApplicationsController {
             system_message: response.system_message,
             data: {
                 application: response.application,
+            },
+            errors: null,
+        };
+    }
+
+    @Get('/job/:id')
+    @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard)
+    @ApiOkResponse({
+        type: GetApplicationsResponseDto,
+    })
+    public async getApplicationsByJobId(
+        @Req() request: IAuthorizedRequest,
+        @Param('id') id: string,
+    ): Promise<GetApplicationsResponseDto> {
+        const response: IServiceApplicationsSearchResponse = await firstValueFrom(
+            this.applicationsServiceClient.send('applications_get_by_job_id', { id }),
+        );
+
+        if (response.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    system_message: response.system_message,
+                    data: null,
+                    errors: response.errors,
+                },
+                response.status,
+            );
+        }
+
+        return {
+            system_message: response.system_message,
+            data: {
+                applications: response.applications,
             },
             errors: null,
         };
