@@ -12,6 +12,8 @@ async function bootstrap() {
     .addTag('users')
     .addTag('user_ratings')
     .addTag('jobs')
+    .addTag('applications')
+    .addTag('messages')
     .setVersion('1.0')
     .addBearerAuth(
       {
