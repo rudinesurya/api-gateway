@@ -20,5 +20,5 @@ export class CreateUserRatingResponseDto {
         user_rating: IUserRating;
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

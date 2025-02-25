@@ -23,5 +23,5 @@ export class UpdateUserResponseDto {
         user: IUser;
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

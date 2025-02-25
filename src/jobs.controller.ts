@@ -4,8 +4,6 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nest
 import { firstValueFrom } from "rxjs";
 import { JwtAuthGuard } from "./services/guards/jwt.guard";
 import { IAuthorizedRequest } from "./interfaces/common/authorized-request.interface";
-import { UpdateUserRatingResponseDto } from "./interfaces/user-rating/dto/update-user-rating-response.dto";
-import { DeleteUserRatingResponseDto } from "./interfaces/user-rating/dto/delete-user-rating-response.dto";
 import { CreateJobResponseDto } from "./interfaces/job/dto/create-job-response.dto";
 import { CreateJobDto } from "./interfaces/job/dto/create-job.dto";
 import { DeleteJobResponseDto } from "./interfaces/job/dto/delete-job-response.dto";
@@ -112,7 +110,7 @@ export class JobsController {
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
-        type: UpdateUserRatingResponseDto,
+        type: UpdateJobResponseDto,
     })
     public async updateJob(
         @Param('id') id: string,
@@ -146,7 +144,7 @@ export class JobsController {
     @ApiBearerAuth('JWT-auth')
     @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
-        type: DeleteUserRatingResponseDto,
+        type: DeleteJobResponseDto,
     })
     public async deleteJob(
         @Param('id') id: string,

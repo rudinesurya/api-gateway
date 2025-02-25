@@ -14,5 +14,5 @@ export class GetUserRatingsByRatedUserIdResponseDto {
         user_ratings: IUserRating[];
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

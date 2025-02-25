@@ -26,5 +26,5 @@ export class UpdateJobResponseDto {
         job: IJob;
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

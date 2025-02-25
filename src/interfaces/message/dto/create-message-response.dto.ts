@@ -19,5 +19,5 @@ export class CreateMessageResponseDto {
         message: IMessage;
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

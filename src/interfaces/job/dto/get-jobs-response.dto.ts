@@ -14,5 +14,5 @@ export class GetJobsResponseDto {
         jobs: IJob[];
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

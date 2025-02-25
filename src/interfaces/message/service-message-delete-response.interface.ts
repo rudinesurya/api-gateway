@@ -1,5 +1,5 @@
 export interface IServiceMessageDeleteResponse {
     status: number;
     system_message: string;
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }   

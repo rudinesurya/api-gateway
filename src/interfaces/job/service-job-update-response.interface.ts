@@ -4,5 +4,5 @@ export interface IServiceJobUpdateResponse {
     status: number;
     system_message: string;
     job: IJob | null;
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }

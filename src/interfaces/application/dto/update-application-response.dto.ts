@@ -19,5 +19,5 @@ export class UpdateApplicationResponseDto {
         application: IApplication;
     };
     @ApiProperty({ example: null, nullable: true })
-    errors: { [key: string]: any };
+    errors: { [key: string]: any } | null;
 }
