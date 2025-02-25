@@ -7,10 +7,6 @@ export class CreateApplicationDto {
     })
     job: Types.ObjectId;
     @ApiProperty({
-        example: new Types.ObjectId(),
-    })
-    applicant: Types.ObjectId;
-    @ApiProperty({
         example: "asdasd",
     })
     cover_letter: string;

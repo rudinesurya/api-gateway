@@ -5,10 +5,6 @@ export class CreateMessageDto {
     @ApiProperty({
         example: new Types.ObjectId(),
     })
-    sender: Types.ObjectId;
-    @ApiProperty({
-        example: new Types.ObjectId(),
-    })
     recipient: Types.ObjectId;
     @ApiProperty({
         example: "asdasd",
