@@ -22,13 +22,18 @@ export class MessagesController {
         @Inject('MESSAGES_SERVICE') private readonly messagesServiceClient: ClientProxy,
     ) { }
 
-    @Get()
+    @Get('/chat/:id')
+    @ApiBearerAuth('JWT-auth')
+    @UseGuards(JwtAuthGuard)
     @ApiOkResponse({
         type: GetMessagesResponseDto,
     })
-    public async getMessages(): Promise<GetMessagesResponseDto> {
+    public async getMessagesByChatId(
+        @Param('id') id: string,
+        @Req() request: IAuthorizedRequest
+    ): Promise<GetMessagesResponseDto> {
         const response: IServiceMessagesSearchResponse = await firstValueFrom(
-            this.messagesServiceClient.send('messages_get', {}),
+            this.messagesServiceClient.send('messages_get_by_chat_id', { id }),
         );
 
         return {
