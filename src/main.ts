@@ -7,6 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // Set the global prefix for all routes
   app.setGlobalPrefix('api');
+  app.enableCors({
+    origin: '*', // Change to frontend URL for security
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
   const options = new DocumentBuilder()
     .setTitle('API docs')
     .addTag('users')
