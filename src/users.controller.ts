@@ -26,6 +26,7 @@ import { UpdateUserResponseDto } from './interfaces/user/dto/update-user-respons
 import { UpdateUserProfileDto } from './interfaces/user/dto/update-user-profile.dto';
 import { UpdateUserSettingsDto } from './interfaces/user/dto/update-user-settings.dto';
 import { IUser, IUserCreateResponse, IUserSearchResponse, IUserUpdate, IUserUpdateResponse } from '@rudinesurya/users-service-interfaces';
+import { ITokenCreateResponse, ITokenDestroyResponse } from '@rudinesurya/token-service-interfaces';
 
 @Controller('users')
 @ApiTags('users')
