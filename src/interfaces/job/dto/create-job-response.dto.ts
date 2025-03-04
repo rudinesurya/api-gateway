@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IJob } from '@rudinesurya/jobs-service-interfaces';
 import { Types } from 'mongoose';
-import { IJob } from '../job.interface';
 
 export class CreateJobResponseDto {
     @ApiProperty({ example: 'job_create_success' })

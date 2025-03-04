@@ -10,12 +10,9 @@ import { DeleteApplicationResponseDto } from "./interfaces/application/dto/delet
 import { GetApplicationResponseDto } from "./interfaces/application/dto/get-application-response.dto";
 import { UpdateApplicationResponseDto } from "./interfaces/application/dto/update-application-response.dto";
 import { UpdateApplicationDto } from "./interfaces/application/dto/update-application.dto";
-import { IServiceApplicationCreateResponse } from "./interfaces/application/service-application-create-response.interface";
-import { IServiceApplicationSearchResponse } from "./interfaces/application/service-application-search-response.interface";
-import { IServiceApplicationUpdateResponse } from "./interfaces/application/service-application-update-response.interface";
-import { IServiceJobDeleteResponse } from "./interfaces/job/service-job-delete-response.interface";
 import { GetApplicationsResponseDto } from "./interfaces/application/dto/get-applications-response.dto";
-import { IServiceApplicationsSearchResponse } from "./interfaces/application/service-applications-search-response.interface";
+import { IApplicationSearchResponse, IApplicationsSearchResponse, IApplicationCreateResponse, IApplicationUpdateResponse } from "@rudinesurya/applications-service-interfaces";
+import { IJobDeleteResponse } from "@rudinesurya/jobs-service-interfaces";
 
 @Controller('applications')
 @ApiTags('applications')
@@ -31,7 +28,7 @@ export class ApplicationsController {
     public async getApplicationById(
         @Param('id') id: string,
     ): Promise<GetApplicationResponseDto> {
-        const response: IServiceApplicationSearchResponse = await firstValueFrom(
+        const response: IApplicationSearchResponse = await firstValueFrom(
             this.applicationsServiceClient.send('application_get_by_id', { id }),
         );
 
@@ -65,7 +62,7 @@ export class ApplicationsController {
         @Req() request: IAuthorizedRequest,
         @Param('id') id: string,
     ): Promise<GetApplicationsResponseDto> {
-        const response: IServiceApplicationsSearchResponse = await firstValueFrom(
+        const response: IApplicationsSearchResponse = await firstValueFrom(
             this.applicationsServiceClient.send('applications_get_by_job_id', { id }),
         );
 
@@ -99,7 +96,7 @@ export class ApplicationsController {
         @Req() request: IAuthorizedRequest,
         @Body() body: CreateApplicationDto,
     ): Promise<CreateApplicationResponseDto> {
-        const response: IServiceApplicationCreateResponse = await firstValueFrom(
+        const response: IApplicationCreateResponse = await firstValueFrom(
             this.applicationsServiceClient.send('application_create', { createData: { applicant: request.user._id, ...body } }),
         );
 
@@ -134,7 +131,7 @@ export class ApplicationsController {
         @Req() request: IAuthorizedRequest,
         @Body() body: UpdateApplicationDto,
     ): Promise<UpdateApplicationResponseDto> {
-        const response: IServiceApplicationUpdateResponse = await firstValueFrom(
+        const response: IApplicationUpdateResponse = await firstValueFrom(
             this.applicationsServiceClient.send('application_update', { id, userId: request.user._id, updateData: body }),
         );
         
@@ -168,7 +165,7 @@ export class ApplicationsController {
         @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
     ): Promise<DeleteApplicationResponseDto> {
-        const response: IServiceJobDeleteResponse = await firstValueFrom(
+        const response: IJobDeleteResponse = await firstValueFrom(
             this.applicationsServiceClient.send('application_delete_by_id', {
                 id,
                 userId: request.user._id,

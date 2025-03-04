@@ -10,12 +10,8 @@ import { DeleteJobResponseDto } from "./interfaces/job/dto/delete-job-response.d
 import { GetJobsResponseDto } from "./interfaces/job/dto/get-jobs-response.dto";
 import { UpdateJobResponseDto } from "./interfaces/job/dto/update-job-response.dto";
 import { UpdateJobDto } from "./interfaces/job/dto/update-job.dto";
-import { IServiceJobCreateResponse } from "./interfaces/job/service-job-create-response.interface";
-import { IServiceJobDeleteResponse } from "./interfaces/job/service-job-delete-response.interface";
-import { IServiceJobUpdateResponse } from "./interfaces/job/service-job-update-response.interface";
-import { IServiceJobsSearchResponse } from "./interfaces/job/service-jobs-search-response.interface";
-import { IServiceJobSearchResponse } from "./interfaces/job/service-job-search-response.interface";
 import { GetJobResponseDto } from "./interfaces/job/dto/get-job-response.dto";
+import { IJobSearchResponse, IJobsSearchResponse, IJobCreateResponse, IJobUpdateResponse, IJobDeleteResponse } from "@rudinesurya/jobs-service-interfaces";
 
 @Controller('jobs')
 @ApiTags('jobs')
@@ -31,7 +27,7 @@ export class JobsController {
     public async getJobById(
         @Param('id') id: string,
     ): Promise<GetJobResponseDto> {
-        const response: IServiceJobSearchResponse = await firstValueFrom(
+        const response: IJobSearchResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_get_by_id', { id }),
         );
 
@@ -60,7 +56,7 @@ export class JobsController {
         type: GetJobsResponseDto,
     })
     public async getJobs(): Promise<GetJobsResponseDto> {
-        const response: IServiceJobsSearchResponse = await firstValueFrom(
+        const response: IJobsSearchResponse = await firstValueFrom(
             this.jobsServiceClient.send('jobs_get', {}),
         );
 
@@ -94,7 +90,7 @@ export class JobsController {
         @Req() request: IAuthorizedRequest,
         @Body() body: CreateJobDto,
     ): Promise<CreateJobResponseDto> {
-        const response: IServiceJobCreateResponse = await firstValueFrom(
+        const response: IJobCreateResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_create', { createData: { posted_by: request.user._id, ...body } }),
         );
 
@@ -129,7 +125,7 @@ export class JobsController {
         @Req() request: IAuthorizedRequest,
         @Body() body: UpdateJobDto,
     ): Promise<UpdateJobResponseDto> {
-        const response: IServiceJobUpdateResponse = await firstValueFrom(
+        const response: IJobUpdateResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_update', { id, userId: request.user._id, updateData: body }),
         );
         
@@ -163,7 +159,7 @@ export class JobsController {
         @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
     ): Promise<DeleteJobResponseDto> {
-        const response: IServiceJobDeleteResponse = await firstValueFrom(
+        const response: IJobDeleteResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_delete_by_id', {
                 id,
                 userId: request.user._id,

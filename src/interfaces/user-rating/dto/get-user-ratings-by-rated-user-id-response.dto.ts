@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IUserRating } from '../user-rating.interface';
+import { IUserRating } from '@rudinesurya/user-ratings-service-interfaces';
 
 export class GetUserRatingsByRatedUserIdResponseDto {
     @ApiProperty({ example: 'user_ratings_get_by_rated_user_id_success' })

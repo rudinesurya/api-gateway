@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ILocation } from '../location.interface';
+import { ILocation } from '@rudinesurya/jobs-service-interfaces';
 
 export class CreateJobDto {
     @ApiProperty({

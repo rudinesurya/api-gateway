@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IApplication } from '@rudinesurya/applications-service-interfaces';
 import { Types } from 'mongoose';
-import { IApplication } from '../application.interface';
 
 export class UpdateApplicationResponseDto {
     @ApiProperty({ example: 'application_create_success' })

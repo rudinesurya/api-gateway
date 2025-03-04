@@ -4,16 +4,14 @@ import { ApiBearerAuth, ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nest
 import { firstValueFrom } from "rxjs";
 import { JwtAuthGuard } from "./services/guards/jwt.guard";
 import { IAuthorizedRequest } from "./interfaces/common/authorized-request.interface";
-import { IServiceJobDeleteResponse } from "./interfaces/job/service-job-delete-response.interface";
 import { CreateMessageResponseDto } from "./interfaces/message/dto/create-message-response.dto";
 import { CreateMessageDto } from "./interfaces/message/dto/create-message.dto";
 import { DeleteMessageResponseDto } from "./interfaces/message/dto/delete-message-response.dto";
 import { GetMessagesResponseDto } from "./interfaces/message/dto/get-messages-response.dto";
 import { UpdateMessageResponseDto } from "./interfaces/message/dto/update-message-response.dto";
 import { UpdateMessageDto } from "./interfaces/message/dto/update-message.dto";
-import { IServiceMessageCreateResponse } from "./interfaces/message/service-message-create-response.interface";
-import { IServiceMessageUpdateResponse } from "./interfaces/message/service-message-update-response.interface";
-import { IServiceMessagesSearchResponse } from "./interfaces/message/service-messages-search-response.interface";
+import { IJobDeleteResponse } from "@rudinesurya/jobs-service-interfaces";
+import { IMessagesSearchResponse, IMessageCreateResponse, IMessageUpdateResponse } from "@rudinesurya/messages-service-interfaces";
 
 @Controller('messages')
 @ApiTags('messages')
@@ -32,7 +30,7 @@ export class MessagesController {
         @Param('id') id: string,
         @Req() request: IAuthorizedRequest
     ): Promise<GetMessagesResponseDto> {
-        const response: IServiceMessagesSearchResponse = await firstValueFrom(
+        const response: IMessagesSearchResponse = await firstValueFrom(
             this.messagesServiceClient.send('messages_get_by_chat_id', { id }),
         );
 
@@ -66,7 +64,7 @@ export class MessagesController {
         @Req() request: IAuthorizedRequest,
         @Body() body: CreateMessageDto,
     ): Promise<CreateMessageResponseDto> {
-        const response: IServiceMessageCreateResponse = await firstValueFrom(
+        const response: IMessageCreateResponse = await firstValueFrom(
             this.messagesServiceClient.send('message_create', { createData: { sender: request.user._id, ...body } }),
         );
 
@@ -101,7 +99,7 @@ export class MessagesController {
         @Req() request: IAuthorizedRequest,
         @Body() body: UpdateMessageDto,
     ): Promise<UpdateMessageResponseDto> {
-        const response: IServiceMessageUpdateResponse = await firstValueFrom(
+        const response: IMessageUpdateResponse = await firstValueFrom(
             this.messagesServiceClient.send('message_update', { id, userId: request.user._id, updateData: body }),
         );
         
@@ -135,7 +133,7 @@ export class MessagesController {
         @Param('id') id: string,
         @Req() request: IAuthorizedRequest,
     ): Promise<DeleteMessageResponseDto> {
-        const response: IServiceJobDeleteResponse = await firstValueFrom(
+        const response: IJobDeleteResponse = await firstValueFrom(
             this.messagesServiceClient.send('message_delete_by_id', {
                 id,
                 userId: request.user._id,

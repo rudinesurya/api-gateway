@@ -15,8 +15,6 @@ import { firstValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags, ApiOkResponse, ApiCreatedResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { IAuthorizedRequest } from './interfaces/common/authorized-request.interface';
-import { IServiceTokenCreateResponse } from './interfaces/token/service-token-create-response.interface';
-import { IServiceTokenDestroyResponse } from './interfaces/token/service-token-destroy-response.interface';
 import { GetUserByTokenResponseDto as GetUserResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
 import { CreateUserDto } from './interfaces/user/dto/create-user.dto';
 import { CreateUserResponseDto } from './interfaces/user/dto/create-user-response.dto';
@@ -122,7 +120,7 @@ export class UsersController {
             );
         }
 
-        const createTokenResponse: IServiceTokenCreateResponse = await firstValueFrom(
+        const createTokenResponse: ITokenCreateResponse = await firstValueFrom(
             this.tokenServiceClient.send('token_create', {
                 userId: createUserResponse.user._id,
             }),
@@ -160,7 +158,7 @@ export class UsersController {
             );
         }
 
-        const createTokenResponse: IServiceTokenCreateResponse = await firstValueFrom(
+        const createTokenResponse: ITokenCreateResponse = await firstValueFrom(
             this.tokenServiceClient.send('token_create', {
                 userId: getUserResponse.user._id,
             }),
@@ -186,7 +184,7 @@ export class UsersController {
     ): Promise<LogoutUserResponseDto> {
         const userInfo = request.user;
 
-        const destroyTokenResponse: IServiceTokenDestroyResponse = await firstValueFrom(
+        const destroyTokenResponse: ITokenDestroyResponse = await firstValueFrom(
             this.tokenServiceClient.send('token_destroy', {
                 userId: userInfo._id,
             }),

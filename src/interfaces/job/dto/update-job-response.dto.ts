@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IJob } from '../job.interface';
+import { IJob } from '@rudinesurya/jobs-service-interfaces';
 import { Types } from 'mongoose';
 
 export class UpdateJobResponseDto {

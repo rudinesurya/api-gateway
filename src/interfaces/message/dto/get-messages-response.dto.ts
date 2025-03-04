@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IMessage } from '../message.interface';
+import { IMessage } from '@rudinesurya/messages-service-interfaces';
 
 export class GetMessagesResponseDto {
     @ApiProperty({ example: 'messages_get_success' })

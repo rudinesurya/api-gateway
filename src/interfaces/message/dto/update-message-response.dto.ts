@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IMessage } from '@rudinesurya/messages-service-interfaces';
 import { Types } from 'mongoose';
-import { IMessage } from '../message.interface';
 
 export class UpdateMessageResponseDto {
     @ApiProperty({ example: 'message_update_success' })
