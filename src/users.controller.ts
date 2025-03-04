@@ -15,8 +15,6 @@ import { firstValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { ApiTags, ApiOkResponse, ApiCreatedResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { IAuthorizedRequest } from './interfaces/common/authorized-request.interface';
-import { IServiceUserCreateResponse } from './interfaces/user/service-user-create-response.interface';
-import { IServiceUserSearchResponse } from './interfaces/user/service-user-search-response.interface';
 import { IServiceTokenCreateResponse } from './interfaces/token/service-token-create-response.interface';
 import { IServiceTokenDestroyResponse } from './interfaces/token/service-token-destroy-response.interface';
 import { GetUserByTokenResponseDto as GetUserResponseDto } from './interfaces/user/dto/get-user-by-token-response.dto';
@@ -27,9 +25,9 @@ import { LoginUserResponseDto } from './interfaces/user/dto/login-user-response.
 import { LogoutUserResponseDto } from './interfaces/user/dto/logout-user-response.dto';
 import { JwtAuthGuard } from './services/guards/jwt.guard';
 import { UpdateUserResponseDto } from './interfaces/user/dto/update-user-response.dto';
-import { IServiceUserUpdateResponse } from './interfaces/user/service-user-update-response.interface';
 import { UpdateUserProfileDto } from './interfaces/user/dto/update-user-profile.dto';
 import { UpdateUserSettingsDto } from './interfaces/user/dto/update-user-settings.dto';
+import { IUser, IUserCreateResponse, IUserSearchResponse, IUserUpdate, IUserUpdateResponse } from '@rudinesurya/users-service-interfaces';
 
 @Controller('users')
 @ApiTags('users')
@@ -48,7 +46,7 @@ export class UsersController {
     public async getUserByToken(
         @Req() request: IAuthorizedRequest,
     ): Promise<GetUserResponseDto> {
-        const response: IServiceUserSearchResponse = await firstValueFrom(
+        const response: IUserSearchResponse = await firstValueFrom(
             this.usersServiceClient.send('user_get_by_id', { id: request.user._id }),
         );
 
@@ -79,7 +77,7 @@ export class UsersController {
     public async getUserByHandle(
         @Param('handle') handle: string,
     ): Promise<GetUserResponseDto> {
-        const response: IServiceUserSearchResponse = await firstValueFrom(
+        const response: IUserSearchResponse = await firstValueFrom(
             this.usersServiceClient.send('user_get_by_handle', { handle }),
         );
 
@@ -110,7 +108,7 @@ export class UsersController {
     public async createUser(
         @Body() body: CreateUserDto,
     ): Promise<CreateUserResponseDto> {
-        const createUserResponse: IServiceUserCreateResponse = await firstValueFrom(
+        const createUserResponse: IUserCreateResponse = await firstValueFrom(
             this.usersServiceClient.send('user_create', { createData: body }),
         );
         if (createUserResponse.status !== HttpStatus.CREATED) {
@@ -147,7 +145,7 @@ export class UsersController {
     public async loginUser(
         @Body() body: LoginUserDto,
     ): Promise<LoginUserResponseDto> {
-        const getUserResponse: IServiceUserSearchResponse = await firstValueFrom(
+        const getUserResponse: IUserSearchResponse = await firstValueFrom(
             this.usersServiceClient.send('user_search_by_credentials', { email: body.email, password: body.password }),
         );
 
@@ -222,7 +220,7 @@ export class UsersController {
         @Req() request: IAuthorizedRequest,
         @Body() body: UpdateUserSettingsDto,
     ): Promise<UpdateUserResponseDto> {
-        const response: IServiceUserUpdateResponse = await firstValueFrom(
+        const response: IUserUpdateResponse = await firstValueFrom(
             this.usersServiceClient.send('user_update', { id: request.user._id, updateData: body }),
         );
         if (response.status !== HttpStatus.OK) {
@@ -255,7 +253,7 @@ export class UsersController {
         @Req() request: IAuthorizedRequest,
         @Body() body: UpdateUserProfileDto,
     ): Promise<UpdateUserResponseDto> {
-        const response: IServiceUserUpdateResponse = await firstValueFrom(
+        const response: IUserUpdateResponse = await firstValueFrom(
             this.usersServiceClient.send('user_update', { id: request.user._id, updateData: body }),
         );
         if (response.status !== HttpStatus.OK) {

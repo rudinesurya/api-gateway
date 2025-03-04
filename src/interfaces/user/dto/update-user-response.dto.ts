@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IUser } from '../user.interface';
+import { IUser } from '@rudinesurya/users-service-interfaces';
 import { Types } from 'mongoose';
 
 export class UpdateUserResponseDto {
