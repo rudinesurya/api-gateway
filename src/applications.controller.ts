@@ -102,6 +102,7 @@ export class ApplicationsController {
         const response: IServiceApplicationCreateResponse = await firstValueFrom(
             this.applicationsServiceClient.send('application_create', { createData: { applicant: request.user._id, ...body } }),
         );
+
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
@@ -136,6 +137,7 @@ export class ApplicationsController {
         const response: IServiceApplicationUpdateResponse = await firstValueFrom(
             this.applicationsServiceClient.send('application_update', { id, userId: request.user._id, updateData: body }),
         );
+        
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {

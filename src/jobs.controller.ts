@@ -64,6 +64,17 @@ export class JobsController {
             this.jobsServiceClient.send('jobs_get', {}),
         );
 
+        if (response.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    system_message: response.system_message,
+                    data: null,
+                    errors: response.errors,
+                },
+                response.status,
+            );
+        }
+
         return {
             system_message: response.system_message,
             data: {
@@ -86,6 +97,7 @@ export class JobsController {
         const response: IServiceJobCreateResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_create', { createData: { posted_by: request.user._id, ...body } }),
         );
+
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
@@ -120,6 +132,7 @@ export class JobsController {
         const response: IServiceJobUpdateResponse = await firstValueFrom(
             this.jobsServiceClient.send('job_update', { id, userId: request.user._id, updateData: body }),
         );
+        
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {

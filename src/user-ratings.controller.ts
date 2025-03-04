@@ -33,6 +33,17 @@ export class UserRatingsController {
             this.userRatingsServiceClient.send('user_ratings_get_by_rated_user_id', { ratedUserId: id }),
         );
 
+        if (response.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    system_message: response.system_message,
+                    data: null,
+                    errors: response.errors,
+                },
+                response.status,
+            );
+        }
+
         return {
             system_message: response.system_message,
             data: {
@@ -55,6 +66,7 @@ export class UserRatingsController {
         const response: IServiceUserRatingCreateResponse = await firstValueFrom(
             this.userRatingsServiceClient.send('user_rating_create', { createData: { rater: request.user._id, ...body } }),
         );
+
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
@@ -89,6 +101,7 @@ export class UserRatingsController {
         const response: IServiceUserRatingUpdateResponse = await firstValueFrom(
             this.userRatingsServiceClient.send('user_rating_update', { ratingId: id, raterId: request.user._id, updateData: body }),
         );
+        
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {

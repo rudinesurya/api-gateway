@@ -52,6 +52,17 @@ export class UsersController {
             this.usersServiceClient.send('user_get_by_id', { id: request.user._id }),
         );
 
+        if (response.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    system_message: response.system_message,
+                    data: null,
+                    errors: response.errors,
+                },
+                response.status,
+            );
+        }
+
         return {
             system_message: response.system_message,
             data: {
@@ -71,6 +82,17 @@ export class UsersController {
         const response: IServiceUserSearchResponse = await firstValueFrom(
             this.usersServiceClient.send('user_get_by_handle', { handle }),
         );
+
+        if (response.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    system_message: response.system_message,
+                    data: null,
+                    errors: response.errors,
+                },
+                response.status,
+            );
+        }
 
         return {
             system_message: response.system_message,

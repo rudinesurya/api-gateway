@@ -36,6 +36,17 @@ export class MessagesController {
             this.messagesServiceClient.send('messages_get_by_chat_id', { id }),
         );
 
+        if (response.status !== HttpStatus.OK) {
+            throw new HttpException(
+                {
+                    system_message: response.system_message,
+                    data: null,
+                    errors: response.errors,
+                },
+                response.status,
+            );
+        }
+
         return {
             system_message: response.system_message,
             data: {
@@ -58,6 +69,7 @@ export class MessagesController {
         const response: IServiceMessageCreateResponse = await firstValueFrom(
             this.messagesServiceClient.send('message_create', { createData: { sender: request.user._id, ...body } }),
         );
+
         if (response.status !== HttpStatus.CREATED) {
             throw new HttpException(
                 {
@@ -92,6 +104,7 @@ export class MessagesController {
         const response: IServiceMessageUpdateResponse = await firstValueFrom(
             this.messagesServiceClient.send('message_update', { id, userId: request.user._id, updateData: body }),
         );
+        
         if (response.status !== HttpStatus.OK) {
             throw new HttpException(
                 {
