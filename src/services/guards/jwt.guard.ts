@@ -1,8 +1,8 @@
 import { Injectable, CanActivate, ExecutionContext, UnauthorizedException, Inject, HttpException } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import logger from '@rudinesurya/logger';
 import { Request } from 'express';
 import { firstValueFrom } from 'rxjs';
-import logger from '../logger';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
