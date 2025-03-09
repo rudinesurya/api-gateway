@@ -26,7 +26,7 @@
     "@nestjs/microservices": "^10.4.15",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.4.2",
-    "@rudinesurya/applications-service-interfaces": "^1.0.4",
+    "@rudinesurya/applications-service-interfaces": "^1.0.5",
     "@rudinesurya/jobs-service-interfaces": "^1.0.7",
     "@rudinesurya/logger": "^1.0.5",
     "@rudinesurya/messages-service-interfaces": "^1.0.4",
